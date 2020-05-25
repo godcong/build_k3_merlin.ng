@@ -53,11 +53,13 @@ jobs:
         git clone --depth=1 https://github.com/godcong/asuswrt-merlin.ng 
         echo $(pwd)
           
-        cd ~/asuswrt-merlin.ng/release/src/router/
+        cd asuswrt-merlin.ng/release/src/router/
         git clone --depth=1 https://github.com/godcong/k3screenctrl 
                
     - name: Build Firmware
       run: |
-        cd ~/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src
+        cd asuswrt-merlin.ng/release/src-rt-7.14.114.x/src
         make rt-k3
+        
+        mkdir -p /opt/images/
         sudo mv -f asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/image/*.trx /opt/images/
