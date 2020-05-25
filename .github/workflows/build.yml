@@ -32,6 +32,6 @@ jobs:
                
     - name: Build Firmware
       run: |
-        cd /asuswrt-merlin.ng/release/src-rt-7.14.114.x/src
+        cd asuswrt-merlin.ng/release/src-rt-7.14.114.x/src
         make rt-k3
-        sudo mv -f /asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/image/*.trx /opt/images/
+        sudo mv -f asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/image/*.trx /opt/images/
