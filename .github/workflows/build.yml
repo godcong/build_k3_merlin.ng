@@ -41,7 +41,7 @@ jobs:
      #   sudo apt-get install -y lib32z1-dev lib32stdc++6
        
      # Runs a set of commands using the runners shell
-    - name: Uupdate x86 package
+    - name: Update x86 package
       run: |
         sudo dpkg --add-architecture i386
         sudo dpkg --print-foreign-architectures
