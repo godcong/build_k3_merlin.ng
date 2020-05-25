@@ -24,8 +24,10 @@ jobs:
     - name: Clone source code
       run: |
         git clone --depth=1 https://github.com/godcong/asuswrt-merlin.ng 
+        echo $(pwd)
         
-        cd /asuswrt-merlin.ng/release/src/router/
+        
+        cd asuswrt-merlin.ng/release/src/router/
         git clone --depth=1 https://github.com/godcong/k3screenctrl 
                
     - name: Build Firmware
