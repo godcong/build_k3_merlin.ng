@@ -23,7 +23,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       uses: actions/checkout@master
       # Runs a single command using the runners shell
-    - name: update && install packages
+    - name: Update && install packages
       run: |
         sudo apt-get update
         sudo apt-get install -y libncurses5 libncurses5-dev m4 bison gawk flex libstdc++6-4.7-dev g++-4.7 g++ \
@@ -31,7 +31,7 @@ jobs:
         mtd-utils intltool sharutils docbook-xsl-* libstdc++5 texinfo dos2unix xsltproc \
         u-boot-tools device-tree-compiler qemu gperf liblzo2-dev uuid-dev build-essential \
         lzma-dev liblzma-dev lzma binutils-dev patch cmake intltool libglib2.0-dev \
-        gtk-doc-tools
+        gtk-doc-tools gcc-arm-linux-gnueabi
      #   sudo apt-get install -y libtool-bin cmake libproxy-dev uuid-dev liblzo2-dev autoconf automake bash bison \
      #   bzip2 diffutils file flex m4 g++ gawk groff-base libncurses-dev libtool libslang2 make patch perl pkg-config shtool \
      #   subversion tar texinfo zlib1g zlib1g-dev git-core gettext libexpat1-dev libssl-dev cvs gperf unzip \
@@ -41,7 +41,7 @@ jobs:
      #   sudo apt-get install -y lib32z1-dev lib32stdc++6
        
      # Runs a set of commands using the runners shell
-    - name: update x86 package
+    - name: Uupdate x86 package
       run: |
         sudo dpkg --add-architecture i386
         sudo dpkg --print-foreign-architectures
