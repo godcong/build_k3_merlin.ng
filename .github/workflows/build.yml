@@ -53,14 +53,13 @@ jobs:
         git clone https://github.com/RMerl/asuswrt-merlin
         git clone https://github.com/RMerl/am-toolchains.git
         git clone --depth=1 https://github.com/godcong/asuswrt-merlin.ng
-        
-        cd asuswrt-merlin.ng/release/src/router/
+      
         git clone --depth=1 https://github.com/godcong/k3screenctrl asuswrt-merlin.ng/release/src/router/
-        echo "k3screenctrl"
+        echo "print dir k3screenctrl"
         ls -A asuswrt-merlin.ng/release/src/router
         
-        echo "brcm-arm"
-        ls -A asuswrt-merlin/release/src-rt-6.x.4708/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3\bin
+        echo "print dir brcm-arm"
+        ls -A asuswrt-merlin/release/src-rt-6.x.4708/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3/bin
        
     - name: Build Firmware
       run: |
