@@ -56,13 +56,19 @@ jobs:
         
         cd asuswrt-merlin.ng/release/src/router/
         git clone --depth=1 https://github.com/godcong/k3screenctrl asuswrt-merlin.ng/release/src/router/
-               
+        echo "k3screenctrl"
+        ls -A asuswrt-merlin.ng/release/src/router
+        
+        echo "brcm-arm"
+        ls -A asuswrt-merlin/release/src-rt-6.x.4708/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3\bin
+       
     - name: Build Firmware
       run: |
         sudo ln -s am-toolchains/brcm-arm-hnd /opt/toolchains
         sudo ln -s asuswrt-merlin/tools/brcm /opt/brcm
         sudo ln -s asuswrt-merlin/release/src-rt-6.x.4708/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3 /opt/brcm-arm
         export PATH=$PATH:/opt/brcm/hndtools-mipsel-linux/bin:/opt/brcm/hndtools-mipsel-uclibc/bin:/opt/brcm-arm/bin
+
         sudo ln -sf bash /bin/sh
         echo "export LD_LIBRARY_PATH=$LD_LIBRARY:/opt/toolchains/crosstools-arm-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/lib" >> ~/.profile
         echo "export TOOLCHAIN_BASE=/opt/toolchains" >> ~/.profile
