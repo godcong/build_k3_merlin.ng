@@ -74,10 +74,11 @@ jobs:
         echo "PATH=\$PATH:/opt/toolchains/crosstools-arm-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/bin" >> ~/.profile
         echo "PATH=\$PATH:/opt/toolchains/crosstools-aarch64-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/bin" >> ~/.profile
         sudo mkdir -p /media/ASUSWRT/
-        #sudo ln -s asuswrt-merlin /media/ASUSWRT/asuswrt-merlin
-        sudo ln -s asuswrt-merlin.ng /media/ASUSWRT/asuswrt-merlin.ng
+        #sudo ln -s $(pwd)/asuswrt-merlin /media/ASUSWRT/asuswrt-merlin
+        sudo ln -s $(pwd)/asuswrt-merlin.ng /media/ASUSWRT/asuswrt-merlin.ng
         cd asuswrt-merlin.ng/release/src-rt-7.14.114.x/src
         make rt-k3
         
         mkdir -p /opt/images/
-        sudo mv -f asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/image/*.trx /opt/images/
+        #sudo mv -f asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/image/*.trx /opt/images/
+        sudo mv -f image/*.trx /opt/images/
