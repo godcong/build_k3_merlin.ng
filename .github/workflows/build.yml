@@ -83,19 +83,22 @@ jobs:
 
         #sudo ln -s $(pwd)/asuswrt-merlin /media/asuswrt/asuswrt-merlin
         sudo ln -s $(pwd)/asuswrt-merlin.ng /media/asuswrt/asuswrt-merlin.ng
-        cd asuswrt-merlin.ng/release/src-rt-7.14.114.x/src
+        cd /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src
         make rt-k3
-        
+        echo "build done" 
        
-        #sudo mv -f asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/image/*.trx /opt/images/
-        sudo mv -f image/*.trx /opt/images/
+        
 #    - name : Upload packages
 #      uses: actions/upload-artifact@master
 #      if: always()
 #      with:
 #        name: Padavan-packages
 #        path: /opt/images
-
+    - name: Move file
+      run: |
+        #sudo mv -f asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/image/*.trx /opt/images/
+        sudo mv -f /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/image/*.trx /opt/images/
+        
     - name: Create Release
       id: create_release
       uses: ncipollo/release-action@v1
