@@ -56,8 +56,8 @@ jobs:
       
         git clone --depth=1 https://github.com/godcong/k3screenctrl asuswrt-merlin.ng/release/src/router/k3screenctrl 
         
-        mkdir -p /media/asuswrt/
-        mkdir -p /opt/images/
+        sudo mkdir -p /media/asuswrt/
+        sudo mkdir -p /opt/images/
         
         cd asuswrt-merlin.ng
         echo "::set-env name=MERLIN_VERSION::$(git show-ref --heads -s)"
