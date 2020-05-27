@@ -15,23 +15,23 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-16.04
     if: github.event.repository.owner.id == github.event.sender.id
 
     steps:
     - name: Checkout
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      uses: actions/checkout@master
+      uses: actions/checkout@v2
       # Runs a single command using the runners shell
     - name: Update && install packages
       run: |
         sudo apt-get update
-        sudo apt-get install -y libtool-bin cmake libproxy-dev uuid-dev liblzo2-dev autoconf automake bash bison \
-        bzip2 diffutils file flex m4 g++ gawk groff-base libncurses5-dev libtool libslang2 make patch perl pkg-config shtool \
-        subversion tar texinfo zlib1g zlib1g-dev git gettext libexpat1-dev libssl-dev cvs gperf unzip \
-        python libxml-parser-perl gcc-multilib gconf-editor libxml2-dev g++-multilib gitk libncurses5 mtd-utils \
-        libncurses5-dev libvorbis-dev git autopoint autogen sed build-essential intltool libglib2.0-dev \
-        xutils-dev lib32z1-dev lib32stdc++6 xsltproc gtk-doc-tools
+        sudo apt-get install -y libncurses5 libncurses5-dev m4 bison gawk flex libstdc++6-4.7-dev g++-4.7 g++ \
+        gengetopt git gitk zlib1g-dev autoconf autopoint libtool-bin shtool autogen \
+        mtd-utils intltool sharutils docbook-xsl-* libstdc++5 texinfo dos2unix xsltproc \
+        u-boot-tools device-tree-compiler qemu gperf liblzo2-dev uuid-dev build-essential \
+        lzma-dev liblzma-dev lzma binutils-dev patch cmake intltool libglib2.0-dev \
+        gtk-doc-tools gcc-arm-linux-gnueabi
      # package for 16.04   
      #   sudo apt-get install -y libncurses5 libncurses5-dev m4 bison gawk flex libstdc++6-4.7-dev g++-4.7 g++ \
      #   gengetopt git gitk zlib1g-dev autoconf autopoint libtool-bin shtool autogen \
@@ -41,29 +41,27 @@ jobs:
      #   gtk-doc-tools gcc-arm-linux-gnueabi
         
      #   sudo apt-get install -y libtool-bin cmake libproxy-dev uuid-dev liblzo2-dev autoconf automake bash bison \
-     #   bzip2 diffutils file flex m4 g++ gawk groff-base libncurses-dev libtool libslang2 make patch perl pkg-config shtool \
-     #   subversion tar texinfo zlib1g zlib1g-dev git-core gettext libexpat1-dev libssl-dev cvs gperf unzip \
+     #   bzip2 diffutils file flex m4 g++ gawk groff-base libncurses5-dev libtool libslang2 make patch perl pkg-config shtool \
+     #   subversion tar texinfo zlib1g zlib1g-dev git gettext libexpat1-dev libssl-dev cvs gperf unzip \
      #   python libxml-parser-perl gcc-multilib gconf-editor libxml2-dev g++-multilib gitk libncurses5 mtd-utils \
-     #   libncurses5-dev libvorbis-dev git autopoint autogen sed build-essential intltool libelf1:i386 libglib2.0-dev \
+     #   libncurses5-dev libvorbis-dev git autopoint autogen sed build-essential intltool libglib2.0-dev \
      #   xutils-dev lib32z1-dev lib32stdc++6 xsltproc gtk-doc-tools
-     #   sudo apt-get install -y lib32z1-dev lib32stdc++6
        
-     # Runs a set of commands using the runners shell
+    # Runs a set of commands using the runners shell
     - name: Update x86 package
       run: |
         sudo dpkg --add-architecture i386
         sudo dpkg --print-foreign-architectures
         sudo apt-get update
-        sudo apt-get install -y libc6-i386 lib32stdc++6 lib32z1 libelf1:i386 lib32ncurses5 libc6-dev-i386 
+        sudo apt-get install -y libc6-i386 lib32stdc++6 lib32z1 libelf1:i386 lib32ncurses5 libc6-dev-i386
         
     - name: Clone source code
       run: |       
         git clone https://github.com/RMerl/asuswrt-merlin
-        git clone https://github.com/RMerl/am-toolchains.git
         git clone https://github.com/ghostnup/asuswrt-merlin.ng
-      
         git clone https://github.com/ghostnup/k3screenctrl asuswrt-merlin.ng/release/src/router/k3screenctrl 
-        
+        git clone https://github.com/RMerl/am-toolchains.git
+                
         sudo mkdir -p /media/asuswrt/
         sudo mkdir -p /opt/images/
         
@@ -82,19 +80,18 @@ jobs:
         sudo ln -s $(pwd)/asuswrt-merlin/tools/brcm /opt/brcm
         sudo ln -s $(pwd)/asuswrt-merlin/release/src-rt-6.x.4708/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3 /opt/brcm-arm
         export PATH=$PATH:/opt/brcm/hndtools-mipsel-linux/bin:/opt/brcm/hndtools-mipsel-uclibc/bin:/opt/brcm-arm/bin
-
         sudo ln -sf bash /bin/sh
         echo "export LD_LIBRARY_PATH=$LD_LIBRARY:/opt/toolchains/crosstools-arm-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/lib" >> ~/.profile
         echo "export TOOLCHAIN_BASE=/opt/toolchains" >> ~/.profile
         echo "PATH=\$PATH:/opt/toolchains/crosstools-arm-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/bin" >> ~/.profile
         echo "PATH=\$PATH:/opt/toolchains/crosstools-aarch64-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/bin" >> ~/.profile
-
+        
         #sudo ln -s $(pwd)/asuswrt-merlin /media/asuswrt/asuswrt-merlin
         sudo ln -s $(pwd)/asuswrt-merlin.ng /media/asuswrt/asuswrt-merlin.ng
-        cd /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src
+        cd asuswrt-merlin.ng/release/src-rt-7.14.114.x/src
+
         make rt-k3
-        echo "build done" 
-       
+        echo "build done"      
         
 #    - name : Upload packages
 #      uses: actions/upload-artifact@master
