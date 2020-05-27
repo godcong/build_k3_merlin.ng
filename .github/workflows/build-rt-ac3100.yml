@@ -1,4 +1,4 @@
-name: build k3-merlin.ng
+name: build-rt-ac3100
 
 on: 
   release:
