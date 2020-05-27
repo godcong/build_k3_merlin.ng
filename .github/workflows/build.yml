@@ -60,9 +60,9 @@ jobs:
       run: |       
         git clone https://github.com/RMerl/asuswrt-merlin
         git clone https://github.com/RMerl/am-toolchains.git
-        git clone https://github.com/godcong/asuswrt-merlin.ng
+        git clone https://github.com/ghostnup/asuswrt-merlin.ng
       
-        git clone https://github.com/godcong/k3screenctrl asuswrt-merlin.ng/release/src/router/k3screenctrl 
+        git clone https://github.com/ghostnup/k3screenctrl asuswrt-merlin.ng/release/src/router/k3screenctrl 
         
         sudo mkdir -p /media/asuswrt/
         sudo mkdir -p /opt/images/
