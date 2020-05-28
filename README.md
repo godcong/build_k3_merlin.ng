@@ -13,7 +13,9 @@ https://github.com/RMerl/asuswrt-merlin.ng
 
 https://www.right.com.cn/forum/forum.php?mod=viewthread&tid=4031512&extra=page%3D1%26filter%3Dtypeid%26typeid%3D15
 
-如果你刷成砖了,那就是ghost1988102锅,本人啥都没改＾ｖ＾！
+固件编译时未包含cfe,理论上不会变砖.
+万一你刷成砖了,那就是ghost1988102锅,本人啥都没改＾ｖ＾！
+
 
 固件下载地址:
 
@@ -25,3 +27,5 @@ https://github.com/godcong/build_k3_merlin.ng/releases
 砖不砖的我不知道,我只负责编译!
 砖不砖的我不知道,我只负责编译!
 重要的事情说三遍.
+
+本固件为包含cfe,
