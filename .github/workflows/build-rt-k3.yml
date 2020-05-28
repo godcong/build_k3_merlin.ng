@@ -116,7 +116,7 @@ jobs:
         tag: build_${{ env.MERLIN_VERSION }}
         body: |
           this is only a latest build from master
-          version: https://github.com/RMerl/asuswrt-merlin.ng/commit/${{ env.MERLIN_VERSION }}
+          version: https://github.com/godcong/asuswrt-merlin.ng/commit/${{ env.MERLIN_VERSION }}
         token: ${{ secrets.GITHUB_TOKEN }}
         draft: false
         prerelease: false
