@@ -17,11 +17,12 @@ https://www.right.com.cn/forum/forum.php?mod=viewthread&tid=4031512&extra=page%3
 万一你刷成砖了,那就是ghost1988102锅,本人啥都没改＾ｖ＾！
 
 
-固件下载地址:
+### 固件下载地址: ###
 
 https://github.com/godcong/build_k3_merlin.ng/releases
 
-你们也可以fork然后star自己编译.
+### 你们也可以fork然后star自己编译. ###
+
 
 砖不砖的我不知道,我只负责编译!　　
 
