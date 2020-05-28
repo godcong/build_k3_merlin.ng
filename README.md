@@ -15,8 +15,7 @@ https://www.right.com.cn/forum/forum.php?mod=viewthread&tid=4031512&extra=page%3
 
 如果你刷成砖了,那就是ghost1988102锅,本人啥都没改＾ｖ＾！
 
-自动编译脚本地址:
-
+固件下载地址:
 
 https://github.com/godcong/build_k3_merlin.ng/releases
 
