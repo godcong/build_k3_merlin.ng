@@ -88,10 +88,14 @@ jobs:
         
         #sudo ln -s $(pwd)/asuswrt-merlin /media/asuswrt/asuswrt-merlin
         sudo ln -s $(pwd)/asuswrt-merlin.ng /media/asuswrt/asuswrt-merlin.ng
-        cd asuswrt-merlin.ng/release/src-rt-7.14.114.x/src
+        cd /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src
 
         make rt-k3
-        echo "build done"      
+        echo "build image done"     
+        
+        cd /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/
+        make
+        echo "build cfe done"
         
 #    - name : Upload packages
 #      uses: actions/upload-artifact@master
