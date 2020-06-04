@@ -3,10 +3,12 @@
 采用ghost1988102源码,并合并了上游(asus-merlin.ng)的最新代码.
 
 
-https://github.com/ghostnup/asuswrt-merlin.ng
+https://github.com/ghostnup/asuswrt-merlin.ng  
++  
+https://github.com/RMerl/asuswrt-merlin.ng  
+=>  
+https://github.com/godcong/asuswrt-merlin.ng  
 
-
-https://github.com/RMerl/asuswrt-merlin.ng
 
 作者原贴请看:
 
