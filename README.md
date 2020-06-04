@@ -13,7 +13,7 @@ https://github.com/RMerl/asuswrt-merlin.ng
 
 https://www.right.com.cn/forum/forum.php?mod=viewthread&tid=4031512&extra=page%3D1%26filter%3Dtypeid%26typeid%3D15
 
-固件编译时未包含cfe,理论上不会变砖.
+固件编译时未包含cfe(新版已包含cfe),理论上不会变砖.
 万一你刷成砖了,那就是ghost1988102锅,本人啥都没改＾ｖ＾！
 
 
