@@ -78,7 +78,7 @@ jobs:
       run: |
         sudo ln -s $(pwd)/am-toolchains/brcm-arm-hnd /opt/toolchains
         sudo ln -s $(pwd)/asuswrt-merlin/tools/brcm /opt/brcm
-        sudo ln -s $(pwd)/asuswrt-merlin/release/src-rt-6.x.4708/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3 /opt/brcm-arm
+        sudo ln -s $(pwd)/am-toolchains/brcm-arm-sdk/hndtools-arm-linux-2.6.36-uclibc-4.5.3 /opt/brcm-arm
         export PATH=$PATH:/opt/brcm/hndtools-mipsel-linux/bin:/opt/brcm/hndtools-mipsel-uclibc/bin:/opt/brcm-arm/bin
         sudo ln -sf bash /bin/sh
         echo "export LD_LIBRARY_PATH=$LD_LIBRARY:/opt/toolchains/crosstools-arm-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/lib" >> ~/.profile
