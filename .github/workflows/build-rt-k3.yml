@@ -15,9 +15,9 @@ on:
     types: [started]
     
 env:
-  ET0MACADDR: "00:11:22:33:44:11"    
-  MACADDR1_24G: "00:11:22:33:44:22"
-  MACADDR2_5G: "00:11:22:33:44:33"
+  ET0MACADDR: "00:11:22:33:44:55"    
+  MACADDR1_24G: "00:11:22:33:44:66"
+  MACADDR2_5G: "00:11:22:33:44:77"
 
 jobs:
   build:
@@ -81,26 +81,37 @@ jobs:
         #echo "print dir brcm-arm"
         #ls -A asuswrt-merlin/release/src-rt-6.x.4708/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3/bin
        
-    - name: Build Firmware
-      run: |
+    - name: Link Directory
+      run: |       
         sudo ln -s $(pwd)/am-toolchains/brcm-arm-hnd /opt/toolchains
         sudo ln -s $(pwd)/asuswrt-merlin/tools/brcm /opt/brcm
         sudo ln -s $(pwd)/am-toolchains/brcm-arm-sdk/hndtools-arm-linux-2.6.36-uclibc-4.5.3 /opt/brcm-arm
-        export PATH=$PATH:/opt/brcm/hndtools-mipsel-linux/bin:/opt/brcm/hndtools-mipsel-uclibc/bin:/opt/brcm-arm/bin
         sudo ln -sf bash /bin/sh
         echo "export LD_LIBRARY_PATH=$LD_LIBRARY:/opt/toolchains/crosstools-arm-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/lib" >> ~/.profile
         echo "export TOOLCHAIN_BASE=/opt/toolchains" >> ~/.profile
         echo "PATH=\$PATH:/opt/toolchains/crosstools-arm-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/bin" >> ~/.profile
-        echo "PATH=\$PATH:/opt/toolchains/crosstools-aarch64-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/bin" >> ~/.profile
-       
+        echo "PATH=\$PATH:/opt/toolchains/crosstools-aarch64-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/bin" >> ~/.profile  
+        
         #sudo ln -s $(pwd)/asuswrt-merlin /media/asuswrt/asuswrt-merlin
-        sudo ln -s $(pwd)/asuswrt-merlin.ng /media/asuswrt/asuswrt-merlin.ng
-       
+        sudo ln -s $(pwd)/asuswrt-merlin.ng /media/asuswrt/asuswrt-merlin.ng       
+        
+    - name: Modify File
+      run: |  
+        cd  /media/asuswrt/asuswrt-merlin.ng/release/src-rt
+        echo "add tag to version"
+        sed -i 's/EXTENDNO=.*/&_${{ env.MERLIN_TAG }}/g' version.conf
+                
         cd  /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/build/broadcom/bcm947xx/compressed
         echo "replace mac address from $(cat rt-k3_nvram.txt | grep ^et0macaddr) to ${{ env.ET0MACADDR }}"
+        sed -i 's/^\(et0macaddr=\).*/\1${{ env.ET0MACADDR }}/g' rt-k3_nvram.txt
         echo "replace mac 2.4g address from $(cat rt-k3_nvram.txt | grep ^1:macaddr) to ${{ env.MACADDR1_24G }}"
+        sed -i 's/^\(1:macaddr=\).*/\1${{ env.MACADDR1_24G }}/g' rt-k3_nvram.txt
         echo "replace mac 5g address from $(cat rt-k3_nvram.txt | grep ^2:macaddr) to ${{ env.MACADDR2_5G }}"
-
+        sed -i 's/^\(2:macaddr=\).*/\1${{ env.MACADDR2_5G }}/g' rt-k3_nvram.txt
+        
+    - name: Build Firmware
+      run: |
+        export PATH=$PATH:/opt/brcm/hndtools-mipsel-linux/bin:/opt/brcm/hndtools-mipsel-uclibc/bin:/opt/brcm-arm/bin
        
         cd /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src
 
@@ -119,8 +130,8 @@ jobs:
 #        path: /opt/images
     - name: Move file
       run: |
-        #sudo mv -f asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/image/*.trx /opt/images/
         sudo mv -f /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/image/*.trx /opt/images/
+        sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/build/broadcom/bcm947xx/compressed/rt-k3_nvram.txt /opt/images/
         
     - name: Create Release
       id: create_release
@@ -128,7 +139,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
-        artifacts: "/opt/images/*.trx"
+        artifacts: "/opt/images/*.*"
         allowUpdates: true 
         commit: master 
         tag: build_${{ env.MERLIN_TAG }}
