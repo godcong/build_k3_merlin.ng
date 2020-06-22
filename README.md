@@ -10,6 +10,24 @@ https://github.com/RMerl/asuswrt-merlin.ng
 https://github.com/godcong/asuswrt-merlin.ng  
 
 
+## 附加说明 ##
+fork 并修改下列文件的ENV配置可实现MAC地址替换
+
+文件（.github/workflows/build-rt-k3.yml）请改成自己的MAC地址。
+
+```
+  env:
+      ET0MACADDR: "00:11:22:33:44:55"    
+      MACADDR1_24G: "00:11:22:33:44:66"
+      MACADDR2_5G: "00:11:22:33:44:77"
+```
+对应=>
+(LAN MAC) et0macaddr=00:11:22:33:44:55 -> et0macaddr=XX:XX:XX:XX:XX:XX
+(2.4G MAC) 1:macaddr=00:11:22:33:44:66 -> 1:macaddr=XX:XX:XX:XX:XX:XX
+(5G MAC) 2:macaddr=00:11:22:33:44:77 -> 2:macaddr=XX:XX:XX:XX:XX:XX
+
+
+
 作者原贴请看:
 
 
