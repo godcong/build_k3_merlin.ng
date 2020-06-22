@@ -67,7 +67,9 @@ jobs:
         
         cd asuswrt-merlin.ng
         git checkout mainline
-        echo "::set-env name=MERLIN_VERSION::$(git show-ref --heads -s)"    
+        echo "::set-env name=MERLIN_VERSION::$(git show-ref --heads -s)"
+        tmpTag="$(git show-ref --heads -s)"
+        echo "::set-env name=MERLIN_TAG::${tmpTag:0:8}"    
       
     - name: Build Firmware
       run: |
@@ -107,7 +109,7 @@ jobs:
         artifacts: "/opt/images/*.trx"
         allowUpdates: true 
         commit: master 
-        tag: build_${{ env.MERLIN_VERSION }}
+        tag: build_${{ env.MERLIN_TAG }}
         body: |
           this is only a latest build from master
           version: https://github.com/godcong/asuswrt-merlin.ng/commit/${{ env.MERLIN_VERSION }}
