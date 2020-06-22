@@ -1,8 +1,9 @@
 # build_k3_merlin.ng
 
+TOP NEW: 新更新添加了编译版本号
+
+
 采用ghost1988102源码,并合并了上游(asus-merlin.ng)的最新代码.
-
-
 https://github.com/ghostnup/asuswrt-merlin.ng  
 +  
 https://github.com/RMerl/asuswrt-merlin.ng  
@@ -25,8 +26,6 @@ fork 并修改下列文件的ENV配置可实现MAC地址替换
 (LAN MAC) et0macaddr=00:11:22:33:44:55 -> et0macaddr=XX:XX:XX:XX:XX:XX
 (2.4G MAC) 1:macaddr=00:11:22:33:44:66 -> 1:macaddr=XX:XX:XX:XX:XX:XX
 (5G MAC) 2:macaddr=00:11:22:33:44:77 -> 2:macaddr=XX:XX:XX:XX:XX:XX
-
-
 
 作者原贴请看:
 
