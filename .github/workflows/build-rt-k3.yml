@@ -1,9 +1,6 @@
 name: build rt-k3
 
-env:
-  ET0MACADDR: "00:11:22:33:44:11"    
-  1_MACADDR: "00:11:22:33:44:22"
-  2_MACADDR: "00:11:22:33:44:33"
+
 on: 
   release:
     types: [published]
@@ -81,6 +78,10 @@ jobs:
         #ls -A asuswrt-merlin/release/src-rt-6.x.4708/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3/bin
        
     - name: Build Firmware
+      env:
+        ET0MACADDR: "00:11:22:33:44:11"    
+        1_MACADDR: "00:11:22:33:44:22"
+        2_MACADDR: "00:11:22:33:44:33"
       run: |
         sudo ln -s $(pwd)/am-toolchains/brcm-arm-hnd /opt/toolchains
         sudo ln -s $(pwd)/asuswrt-merlin/tools/brcm /opt/brcm
