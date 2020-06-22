@@ -67,8 +67,7 @@ jobs:
         
         cd asuswrt-merlin.ng
         echo "::set-env name=MERLIN_VERSION::$(git show-ref --heads -s)"
-        tmpTag="$(git show-ref --heads -s)"
-        echo "::set-env name=MERLIN_TAG::${tmpTag:0:8}"
+        echo "::set-env name=MERLIN_TAG::$(git show-ref --heads --hash=8)"
         
         #echo "print dir k3screenctrl"
         #ls -A asuswrt-merlin.ng/release/src/router
