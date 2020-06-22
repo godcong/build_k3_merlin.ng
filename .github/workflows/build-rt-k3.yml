@@ -92,14 +92,16 @@ jobs:
         echo "export TOOLCHAIN_BASE=/opt/toolchains" >> ~/.profile
         echo "PATH=\$PATH:/opt/toolchains/crosstools-arm-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/bin" >> ~/.profile
         echo "PATH=\$PATH:/opt/toolchains/crosstools-aarch64-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/bin" >> ~/.profile
-        
-        cd  /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/build/broadcom/bcm947xx/compressed
-        echo "replace mac address from $(cat rt-k3_nvram.txt | grep ^et0macaddr) to ${{ env.ET0MACADDR }}"
-         echo "replace mac 2.4g address from $(cat rt-k3_nvram.txt | grep ^1:macaddr) to ${{ env.MACADDR1_24G }}"
-         echo "replace mac 5g address from $(cat rt-k3_nvram.txt | grep ^2:macaddr) to ${{ env.MACADDR2_5G }}"
-
+       
         #sudo ln -s $(pwd)/asuswrt-merlin /media/asuswrt/asuswrt-merlin
         sudo ln -s $(pwd)/asuswrt-merlin.ng /media/asuswrt/asuswrt-merlin.ng
+       
+        cd  /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/build/broadcom/bcm947xx/compressed
+        echo "replace mac address from $(cat rt-k3_nvram.txt | grep ^et0macaddr) to ${{ env.ET0MACADDR }}"
+        echo "replace mac 2.4g address from $(cat rt-k3_nvram.txt | grep ^1:macaddr) to ${{ env.MACADDR1_24G }}"
+        echo "replace mac 5g address from $(cat rt-k3_nvram.txt | grep ^2:macaddr) to ${{ env.MACADDR2_5G }}"
+
+       
         cd /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src
 
         make rt-k3
