@@ -1,5 +1,9 @@
 name: build rt-k3
 
+env:
+  ET0MACADDR: "00:11:22:33:44:11"    
+  1_MACADDR: "00:11:22:33:44:22"
+  2_MACADDR: "00:11:22:33:44:33"
 on: 
   release:
     types: [published]
@@ -12,10 +16,7 @@ on:
 #    - cron: 0 8 * * 5
   watch:
     types: [started]
-env:
-  ET0MACADDR: "00:11:22:33:44:11"    
-  1_MACADDR: "00:11:22:33:44:22"
-  2_MACADDR: "00:11:22:33:44:33"
+
 
 jobs:
   build:
