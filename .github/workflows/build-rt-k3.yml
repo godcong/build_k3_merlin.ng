@@ -95,8 +95,8 @@ jobs:
         
         cd  /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/build/broadcom/bcm947xx/compressed/rt-k3_nvram.txt
         echo "replace mac address from $(cat rt-k3_nvram.txt | grep ^et0macaddr) to ${{ env.ET0MACADDR }}"
-         echo "replace mac 2.4g address from $(cat rt-k3_nvram.txt | grep ^1:macaddr) to ${{ env.1_MACADDR }}"
-         echo "replace mac 5g address from $(cat rt-k3_nvram.txt | grep ^2:macaddr) to ${{ env.2_MACADDR }}"
+         echo "replace mac 2.4g address from $(cat rt-k3_nvram.txt | grep ^1:macaddr) to ${{ env.MACADDR1_24G }}"
+         echo "replace mac 5g address from $(cat rt-k3_nvram.txt | grep ^2:macaddr) to ${{ env.MACADDR2_5G }}"
 
         #sudo ln -s $(pwd)/asuswrt-merlin /media/asuswrt/asuswrt-merlin
         sudo ln -s $(pwd)/asuswrt-merlin.ng /media/asuswrt/asuswrt-merlin.ng
