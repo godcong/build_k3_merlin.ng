@@ -142,7 +142,7 @@ jobs:
         artifacts: "/opt/images/*.*"
         allowUpdates: true 
         commit: master 
-        tag: build_${{ env.MERLIN_TAG }}
+        tag: build_k3_${{ env.MERLIN_TAG }}
         body: |
           this is only a latest build from master
           version: https://github.com/godcong/asuswrt-merlin.ng/commit/${{ env.MERLIN_VERSION }}
