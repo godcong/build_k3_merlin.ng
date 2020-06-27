@@ -134,7 +134,7 @@ jobs:
       run: |
         sudo mv -f /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/image/*.trx /opt/images/
         sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/build/broadcom/bcm947xx/compressed/rt-k3_nvram.txt /opt/images/
-        sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt/version.conf /opt/images/
+        #sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt/version.conf /opt/images/
     - name: Create Release
       id: create_release
       uses: ncipollo/release-action@v1
