@@ -98,8 +98,8 @@ jobs:
     - name: Modify File
       run: |  
         cd  /media/asuswrt/asuswrt-merlin.ng/release/src-rt
-        echo "add tag to version"
-        sed -i 's/EXTENDNO=.*/&_${{ env.MERLIN_TAG }}/g' version.conf
+        #echo "add tag to version"
+        #sed -i 's/EXTENDNO=.*/&_${{ env.MERLIN_TAG }}/g' version.conf
                 
         cd  /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/build/broadcom/bcm947xx/compressed
         echo "replace mac address from $(cat rt-k3_nvram.txt | grep ^et0macaddr) to ${{ env.ET0MACADDR }}"
@@ -144,11 +144,8 @@ jobs:
         artifacts: "/opt/images/*.*"
         allowUpdates: true 
         commit: master 
-        tag: build_k3_mainline_${{ env.MERLIN_TAG }}
+        tag: mainline_k3_${{ env.MERLIN_TAG }}
         body: |
-          未测试可能变砖!
-          未测试可能变砖!
-          未测试可能变砖!
           this is only a latest build from mainline
           version: https://github.com/godcong/asuswrt-merlin.ng/commit/${{ env.MERLIN_VERSION }}
         token: ${{ secrets.GITHUB_TOKEN }}
