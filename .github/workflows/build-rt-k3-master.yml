@@ -1,4 +1,4 @@
-name: build rt-k3
+name: build rt-k3-master
 
 
 on: 
