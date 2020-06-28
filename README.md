@@ -24,7 +24,8 @@ fork 并修改下列文件的ENV配置可实现MAC地址替换，然后点击右
       MACADDR1_24G: "00:11:22:33:44:66"
       MACADDR2_5G: "00:11:22:33:44:77"
 ```
-对应=>
+对应=>  
+
 (LAN MAC) et0macaddr=00:11:22:33:44:55 -> et0macaddr=XX:XX:XX:XX:XX:XX
 
 (2.4G MAC) 1:macaddr=00:11:22:33:44:66 -> 1:macaddr=XX:XX:XX:XX:XX:XX
