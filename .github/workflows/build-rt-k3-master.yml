@@ -70,11 +70,7 @@ jobs:
                 
         sudo mkdir -p /media/asuswrt/
         sudo mkdir -p /opt/images/
-        
-        cd asuswrt-merlin.ng
-        echo "::set-env name=MERLIN_VERSION::$(git show-ref --heads -s)"
-        echo "::set-env name=MERLIN_TAG::$(git show-ref --heads --hash=8)"
-        
+                
         #echo "print dir k3screenctrl"
         #ls -A asuswrt-merlin.ng/release/src/router
         
@@ -112,9 +108,12 @@ jobs:
     - name: Build Firmware
       run: |
         export PATH=$PATH:/opt/brcm/hndtools-mipsel-linux/bin:/opt/brcm/hndtools-mipsel-uclibc/bin:/opt/brcm-arm/bin
-       
+    
+        cd /media/asuswrt/asuswrt-merlin.ng
+        echo "::set-env name=MERLIN_VERSION::$(git show-ref --heads -s)"
+        echo "::set-env name=MERLIN_TAG::$(git show-ref --heads --hash=8)"
+    
         cd /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src
-
         make rt-k3
         echo "build image done"     
         
