@@ -104,17 +104,16 @@ jobs:
     - name: Build Firmware
       run: |
         export PATH=$PATH:/opt/brcm/hndtools-mipsel-linux/bin:/opt/brcm/hndtools-mipsel-uclibc/bin:/opt/brcm-arm/bin
-        
+
         cd /media/asuswrt/asuswrt-merlin.ng
-        git checkout mainline
-        
+        git checkout mainline    
+        echo "::set-env name=MERLIN_VERSION::$(git show-ref --heads -s)"
+        echo "::set-env name=MERLIN_TAG::$(git show-ref --heads --hash=8)"
+
         cd  /media/asuswrt/asuswrt-merlin.ng/release/src-rt
         echo "add tag to version"
         sed -i 's/EXTENDNO=.*/&_${{ env.MERLIN_TAG }}/g' version.conf
         
-        echo "::set-env name=MERLIN_VERSION::$(git show-ref --heads -s)"
-        echo "::set-env name=MERLIN_TAG::$(git show-ref --heads --hash=8)"
-
         cd /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src
         make rt-k3
         echo "build image done"     
