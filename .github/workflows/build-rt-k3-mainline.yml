@@ -92,11 +92,7 @@ jobs:
         sudo ln -s $(pwd)/asuswrt-merlin.ng /media/asuswrt/asuswrt-merlin.ng       
         
     - name: Modify File
-      run: |  
-        cd  /media/asuswrt/asuswrt-merlin.ng/release/src-rt
-        #echo "add tag to version"
-        #sed -i 's/EXTENDNO=.*/&_${{ env.MERLIN_TAG }}/g' version.conf
-                
+      run: |        
         cd  /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/build/broadcom/bcm947xx/compressed
         echo "replace mac address from $(cat rt-k3_nvram.txt | grep ^et0macaddr) to ${{ env.ET0MACADDR }}"
         sed -i 's/^\(et0macaddr=\).*/\1${{ env.ET0MACADDR }}/g' rt-k3_nvram.txt
@@ -111,6 +107,11 @@ jobs:
         
         cd /media/asuswrt/asuswrt-merlin.ng
         git checkout mainline
+        
+        cd  /media/asuswrt/asuswrt-merlin.ng/release/src-rt
+        echo "add tag to version"
+        sed -i 's/EXTENDNO=.*/&_${{ env.MERLIN_TAG }}/g' version.conf
+        
         echo "::set-env name=MERLIN_VERSION::$(git show-ref --heads -s)"
         echo "::set-env name=MERLIN_TAG::$(git show-ref --heads --hash=8)"
 
