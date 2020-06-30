@@ -91,6 +91,10 @@ jobs:
         #sudo ln -s $(pwd)/asuswrt-merlin /media/asuswrt/asuswrt-merlin
         sudo ln -s $(pwd)/asuswrt-merlin.ng /media/asuswrt/asuswrt-merlin.ng       
         
+        cd /media/asuswrt/asuswrt-merlin.ng
+        echo "::set-env name=MERLIN_VERSION::$(git show-ref --heads -s)"
+        echo "::set-env name=MERLIN_TAG::$(git show-ref --heads --hash=8)"
+        
     - name: Modify File
       run: |  
      
@@ -105,11 +109,7 @@ jobs:
     - name: Build Firmware
       run: |
         export PATH=$PATH:/opt/brcm/hndtools-mipsel-linux/bin:/opt/brcm/hndtools-mipsel-uclibc/bin:/opt/brcm-arm/bin
-    
-        cd /media/asuswrt/asuswrt-merlin.ng
-        echo "::set-env name=MERLIN_VERSION::$(git show-ref --heads -s)"
-        echo "::set-env name=MERLIN_TAG::$(git show-ref --heads --hash=8)"
-    
+
         cd  /media/asuswrt/asuswrt-merlin.ng/release/src-rt
         echo "add tag to version"
         sed -i 's/EXTENDNO=.*/&_${{ env.MERLIN_TAG }}/g' version.conf
