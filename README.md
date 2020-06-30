@@ -14,7 +14,7 @@ https://github.com/godcong/asuswrt-merlin.ng
 
 ## 附加说明 ##
 fork 并修改下列文件的ENV配置可实现MAC地址替换，然后点击右上角的Star开始编译。
-1.5小时候，查看自己fork的项目的release接收成果。
+1.5小时左右以后，查看自己fork的项目的release接收成果。
 
 文件（.github/workflows/build-rt-k3.yml）请改成自己的MAC地址。
 
