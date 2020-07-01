@@ -94,6 +94,7 @@ jobs:
         cd /media/asuswrt/asuswrt-merlin.ng
         echo "::set-env name=MERLIN_VERSION::$(git show-ref --heads -s)"
         echo "::set-env name=MERLIN_TAG::$(git show-ref --heads --hash=8)"
+        echo "::set-env name=BUILD_DATE::$(date +%Y%m%d%H%M)"
         
     - name: Modify File
       run: |  
@@ -142,7 +143,7 @@ jobs:
         artifacts: "/opt/images/*.*"
         allowUpdates: true 
         commit: master 
-        tag: master_k3_${{ env.MERLIN_TAG }}
+        tag: ${{ env.BUILD_DATE }}_master_k3_${{ env.MERLIN_TAG }}
         body: |
           this is only a latest build from master
           version: https://github.com/godcong/asuswrt-merlin.ng/commit/${{ env.MERLIN_VERSION }}
