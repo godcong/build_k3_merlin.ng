@@ -142,7 +142,7 @@ jobs:
       with:
         artifacts: "/opt/images/*.*"
         allowUpdates: true 
-        commit: mainline 
+        commit: master 
         tag: ${{ env.BUILD_DATE }}_mainline_k3_${{ env.MERLIN_TAG }}
         body: |
           this is only a latest build from mainline
