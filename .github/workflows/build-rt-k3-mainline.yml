@@ -133,6 +133,7 @@ jobs:
       run: |
         sudo mv -f /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/image/*.trx /opt/images/
         sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/build/broadcom/bcm947xx/compressed/rt-k3_nvram.txt /opt/images/
+        sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/cfe*.bin /opt/images/
         #sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt/version.conf /opt/images/
     - name: Create Release
       id: create_release
@@ -140,7 +141,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
-        artifacts: "/opt/images/*.*"
+        artifacts: "/opt/images/*.*,release/src-rt-7.14.114.x/src/cfe/cfe_rt-k3.bin"
         allowUpdates: true 
         commit: master 
         tag: ${{ env.BUILD_DATE }}_mainline_k3_${{ env.MERLIN_TAG }}
