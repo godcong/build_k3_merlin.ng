@@ -32,6 +32,11 @@ fork 并修改下列文件的ENV配置可实现MAC地址替换，然后点击右
 
 (5G MAC) 2:macaddr=00:11:22:33:44:77 -> 2:macaddr=XX:XX:XX:XX:XX:XX
 
+固件讨论贴请看:
+
+
+https://www.right.com.cn/forum/forum.php?mod=viewthread&tid=4033114&extra=page%3D1%26filter%3Dtypeid%26typeid%3D15
+
 
 作者原贴请看:
 
