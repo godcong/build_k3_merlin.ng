@@ -116,6 +116,7 @@ jobs:
         sed -i 's/EXTENDNO=.*/&_${{ env.MERLIN_TAG }}/g' version.conf
     
         cd /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src
+        make clean
         make rt-k3
         echo "build image done"     
         
