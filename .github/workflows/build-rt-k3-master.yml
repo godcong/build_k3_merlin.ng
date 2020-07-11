@@ -130,12 +130,15 @@ jobs:
 #      with:
 #        name: Padavan-packages
 #        path: /opt/images
-    - name: Move file
+    - name: Move file && Checksum
       run: |
         sudo mv -f /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/image/*.trx /opt/images/
         sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/build/broadcom/bcm947xx/compressed/rt-k3_nvram.txt /opt/images/
         sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/cfe*.bin /opt/images/
         #sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt/version.conf /opt/images/
+        
+        sha256sum /opt/images/* > /opt/images/checksum.txt
+        
     - name: Create Release
       id: create_release
       uses: ncipollo/release-action@v1
