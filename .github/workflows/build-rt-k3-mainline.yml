@@ -63,7 +63,7 @@ jobs:
         
     - name: Clone source code
       run: |       
-        git clone https://github.com/RMerl/asuswrt-merlin
+        #git clone https://github.com/RMerl/asuswrt-merlin
         git clone https://github.com/godcong/asuswrt-merlin.ng
         git clone https://github.com/godcong/k3screenctrl asuswrt-merlin.ng/release/src/router/k3screenctrl 
         git clone https://github.com/RMerl/am-toolchains.git
@@ -80,7 +80,7 @@ jobs:
     - name: Link Directory
       run: |       
         sudo ln -s $(pwd)/am-toolchains/brcm-arm-hnd /opt/toolchains
-        sudo ln -s $(pwd)/asuswrt-merlin/tools/brcm /opt/brcm
+        #sudo ln -s $(pwd)/asuswrt-merlin/tools/brcm /opt/brcm
         sudo ln -s $(pwd)/am-toolchains/brcm-arm-sdk/hndtools-arm-linux-2.6.36-uclibc-4.5.3 /opt/brcm-arm
         sudo ln -sf bash /bin/sh
         echo "export LD_LIBRARY_PATH=$LD_LIBRARY:/opt/toolchains/crosstools-arm-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/lib" >> ~/.profile
@@ -109,7 +109,8 @@ jobs:
         
     - name: Build Firmware
       run: |
-        export PATH=$PATH:/opt/brcm/hndtools-mipsel-linux/bin:/opt/brcm/hndtools-mipsel-uclibc/bin:/opt/brcm-arm/bin
+        #export PATH=$PATH:/opt/brcm/hndtools-mipsel-linux/bin:/opt/brcm/hndtools-mipsel-uclibc/bin:
+        export PATH=$PATH:/opt/brcm-arm/bin
 
         cd  /media/asuswrt/asuswrt-merlin.ng/release/src-rt
         echo "add tag to version"
@@ -130,12 +131,15 @@ jobs:
 #      with:
 #        name: Padavan-packages
 #        path: /opt/images
-    - name: Move file
+    - name: Move file && Checksum
       run: |
         sudo mv -f /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/image/*.trx /opt/images/
         sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/build/broadcom/bcm947xx/compressed/rt-k3_nvram.txt /opt/images/
         sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/cfe*.bin /opt/images/
         #sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt/version.conf /opt/images/
+        
+        sha256sum /opt/images/* > /opt/images/checksum.txt
+
     - name: Create Release
       id: create_release
       uses: ncipollo/release-action@v1
