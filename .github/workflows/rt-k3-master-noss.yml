@@ -1,0 +1,157 @@
+name: build rt-k3-master-noss
+
+
+on: 
+  release:
+    types: [published]
+  push:
+    tags:
+    - 'v*'
+#  branches: 
+#    - master
+#  schedule:
+#    - cron: 0 8 * * 5
+  watch:
+    types: [started]
+    
+env:
+  ET0MACADDR: "00:11:22:33:44:55"    
+  MACADDR1_24G: "00:11:22:33:44:66"
+  MACADDR2_5G: "00:11:22:33:44:77"
+
+jobs:
+  build:
+    runs-on: ubuntu-16.04
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+    - name: Checkout
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      uses: actions/checkout@v2
+      # Runs a single command using the runners shell
+    - name: Update && install packages
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libncurses5 libncurses5-dev m4 bison gawk flex libstdc++6-4.7-dev g++-4.7 g++ \
+        gengetopt git gitk zlib1g-dev autoconf autopoint libtool-bin shtool autogen \
+        mtd-utils intltool sharutils docbook-xsl-* libstdc++5 texinfo dos2unix xsltproc \
+        u-boot-tools device-tree-compiler qemu gperf liblzo2-dev uuid-dev build-essential \
+        lzma-dev liblzma-dev lzma binutils-dev patch cmake intltool libglib2.0-dev \
+        gtk-doc-tools gcc-arm-linux-gnueabi
+     # package for 16.04   
+     #   sudo apt-get install -y libncurses5 libncurses5-dev m4 bison gawk flex libstdc++6-4.7-dev g++-4.7 g++ \
+     #   gengetopt git gitk zlib1g-dev autoconf autopoint libtool-bin shtool autogen \
+     #   mtd-utils intltool sharutils docbook-xsl-* libstdc++5 texinfo dos2unix xsltproc \
+     #   u-boot-tools device-tree-compiler qemu gperf liblzo2-dev uuid-dev build-essential \
+     #   lzma-dev liblzma-dev lzma binutils-dev patch cmake intltool libglib2.0-dev \
+     #   gtk-doc-tools gcc-arm-linux-gnueabi
+        
+     #   sudo apt-get install -y libtool-bin cmake libproxy-dev uuid-dev liblzo2-dev autoconf automake bash bison \
+     #   bzip2 diffutils file flex m4 g++ gawk groff-base libncurses5-dev libtool libslang2 make patch perl pkg-config shtool \
+     #   subversion tar texinfo zlib1g zlib1g-dev git gettext libexpat1-dev libssl-dev cvs gperf unzip \
+     #   python libxml-parser-perl gcc-multilib gconf-editor libxml2-dev g++-multilib gitk libncurses5 mtd-utils \
+     #   libncurses5-dev libvorbis-dev git autopoint autogen sed build-essential intltool libglib2.0-dev \
+     #   xutils-dev lib32z1-dev lib32stdc++6 xsltproc gtk-doc-tools
+       
+    # Runs a set of commands using the runners shell
+    - name: Update x86 package
+      run: |
+        sudo dpkg --add-architecture i386
+        sudo dpkg --print-foreign-architectures
+        sudo apt-get update
+        sudo apt-get install -y libc6-i386 lib32stdc++6 lib32z1 libelf1:i386 lib32ncurses5 libc6-dev-i386
+        
+    - name: Clone source code
+      run: |       
+        #git clone https://github.com/RMerl/asuswrt-merlin
+        git clone https://github.com/godcong/asuswrt-merlin.ng
+        git clone https://github.com/godcong/k3screenctrl asuswrt-merlin.ng/release/src/router/k3screenctrl 
+        git clone https://github.com/RMerl/am-toolchains.git
+                
+        sudo mkdir -p /media/asuswrt/
+        sudo mkdir -p /opt/images/
+                
+        #echo "print dir k3screenctrl"
+        #ls -A asuswrt-merlin.ng/release/src/router
+        
+        #echo "print dir brcm-arm"
+        #ls -A asuswrt-merlin/release/src-rt-6.x.4708/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3/bin
+       
+    - name: Link Directory
+      run: |       
+        sudo ln -s $(pwd)/am-toolchains/brcm-arm-hnd /opt/toolchains
+        #sudo ln -s $(pwd)/asuswrt-merlin/tools/brcm /opt/brcm
+        sudo ln -s $(pwd)/am-toolchains/brcm-arm-sdk/hndtools-arm-linux-2.6.36-uclibc-4.5.3 /opt/brcm-arm
+        sudo ln -sf bash /bin/sh
+        echo "export LD_LIBRARY_PATH=$LD_LIBRARY:/opt/toolchains/crosstools-arm-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/lib" >> ~/.profile
+        echo "export TOOLCHAIN_BASE=/opt/toolchains" >> ~/.profile
+        echo "PATH=\$PATH:/opt/toolchains/crosstools-arm-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/bin" >> ~/.profile
+        echo "PATH=\$PATH:/opt/toolchains/crosstools-aarch64-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/bin" >> ~/.profile  
+        
+        #sudo ln -s $(pwd)/asuswrt-merlin /media/asuswrt/asuswrt-merlin
+        sudo ln -s $(pwd)/asuswrt-merlin.ng /media/asuswrt/asuswrt-merlin.ng       
+        
+        cd /media/asuswrt/asuswrt-merlin.ng
+        echo "::set-env name=MERLIN_VERSION::$(git show-ref --heads -s)"
+        echo "::set-env name=MERLIN_TAG::$(git show-ref --heads --hash=8)"
+        echo "::set-env name=BUILD_DATE::$(date +%Y%m%d%H%M)"
+        
+    - name: Modify File
+      run: |  
+     
+        cd  /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/build/broadcom/bcm947xx/compressed
+        echo "replace mac address from $(cat rt-k3_nvram.txt | grep ^et0macaddr) to ${{ env.ET0MACADDR }}"
+        sed -i 's/^\(et0macaddr=\).*/\1${{ env.ET0MACADDR }}/g' rt-k3_nvram.txt
+        echo "replace mac 2.4g address from $(cat rt-k3_nvram.txt | grep ^1:macaddr) to ${{ env.MACADDR1_24G }}"
+        sed -i 's/^\(1:macaddr=\).*/\1${{ env.MACADDR1_24G }}/g' rt-k3_nvram.txt
+        echo "replace mac 5g address from $(cat rt-k3_nvram.txt | grep ^2:macaddr) to ${{ env.MACADDR2_5G }}"
+        sed -i 's/^\(2:macaddr=\).*/\1${{ env.MACADDR2_5G }}/g' rt-k3_nvram.txt
+        
+    - name: Build Firmware
+      run: |
+        #export PATH=$PATH:/opt/brcm/hndtools-mipsel-linux/bin:/opt/brcm/hndtools-mipsel-uclibc/bin:
+        export PATH=$PATH:/opt/brcm-arm/bin
+        cd  /media/asuswrt/asuswrt-merlin.ng/release/src-rt
+        echo "add tag to version"
+        sed -i 's/EXTENDNO=.*/&_${{ env.MERLIN_TAG }}/g' version.conf
+    
+        cd /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src
+        make clean
+        make rt-k3
+        echo "build image done"     
+        
+        cd /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/
+        make
+        echo "build cfe done"
+        
+#    - name : Upload packages
+#      uses: actions/upload-artifact@master
+#      if: always()
+#      with:
+#        name: Padavan-packages
+#        path: /opt/images
+    - name: Move file && Checksum
+      run: |
+        sudo mv -f /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/image/*.trx /opt/images/
+        sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/build/broadcom/bcm947xx/compressed/rt-k3_nvram.txt /opt/images/
+        sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/cfe*.bin /opt/images/
+        #sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt/version.conf /opt/images/
+        
+        sha256sum /opt/images/* > /opt/images/checksum.txt
+        
+    - name: Create Release
+      id: create_release
+      uses: ncipollo/release-action@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        artifacts: "/opt/images/*.*"
+        allowUpdates: true 
+        commit: master 
+        tag: ${{ env.BUILD_DATE }}_master_k3_noss_${{ env.MERLIN_TAG }}
+        body: |
+          this is only a latest build from master
+          version: https://github.com/godcong/asuswrt-merlin.ng/commit/${{ env.MERLIN_VERSION }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        draft: false
+        prerelease: false
