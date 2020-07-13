@@ -106,6 +106,9 @@ jobs:
         sed -i 's/^\(1:macaddr=\).*/\1${{ env.MACADDR1_24G }}/g' rt-k3_nvram.txt
         echo "replace mac 5g address from $(cat rt-k3_nvram.txt | grep ^2:macaddr) to ${{ env.MACADDR2_5G }}"
         sed -i 's/^\(2:macaddr=\).*/\1${{ env.MACADDR2_5G }}/g' rt-k3_nvram.txt
+        echo "close softcenter build"
+        cd /media/asuswrt/asuswrt-merlin.ng/release/src-rt
+        sed -i 's/SOFTCENTER=y/SOFTCENTER=n/g' target.mak
         
     - name: Build Firmware
       run: |
@@ -136,6 +139,7 @@ jobs:
         sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/build/broadcom/bcm947xx/compressed/rt-k3_nvram.txt /opt/images/
         sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt-7.14.114.x/src/cfe/cfe*.bin /opt/images/
         #sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt/version.conf /opt/images/
+        sudo cp /media/asuswrt/asuswrt-merlin.ng/release/src-rt/target.mak /opt/images/
         
         sha256sum /opt/images/* > /opt/images/checksum.txt
         
