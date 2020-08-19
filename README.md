@@ -1,6 +1,6 @@
 # build_k3_merlin.ng
 
-TOP NEW: 新更新添加了编译版本号
+TOP NEW: 新更新添加了编译版本号 TEST PR
 
 
 采用ghost1988102源码,并合并了上游(asus-merlin.ng)的最新代码.  
